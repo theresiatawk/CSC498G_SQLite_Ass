@@ -2,9 +2,12 @@ package com.lau.sqliteassignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -18,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Hiding the action bar
+        getSupportActionBar().hide();
 
         // Linking the variable the the list view layout
         list = (ListView) findViewById(R.id.list_view);
@@ -53,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e) {
             e.printStackTrace();
         }
+        // On clicking on a certain course go to the study page along with the link to study
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), StudyActivity.class);
+                intent.putExtra("study_link", study_links.get(i));
+                startActivity(intent);
+            }
+        });
 
     }
 }
